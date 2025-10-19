@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI-Powered Chatbot</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8f9fa;
+        }
+        .chat-bubble-bot {
+            background-color: #f1f5f9;
+            color: #1e293b;
+        }
+        .chat-bubble-user {
+            background-color: #3b82f6;
+            color: white;
+        }
+        .tab-active {
+            background-color: #3b82f6;
+            color: white;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+        }
+        .tab-inactive {
+            background-color: #f1f5f9;
+            color: #475569;
+        }
+    </style>
+</head>
+<body class="flex flex-col items-center justify-between min-h-screen p-4 sm:p-6">
+
+    <header class="text-center w-full max-w-4xl mx-auto">
+        <div class="flex justify-center items-center mb-4">
+             <div class="bg-blue-500 p-3 rounded-full text-white">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-4 4v-4z" />
+                </svg>
+             </div>
+        </div>
+        <h1 class="text-2xl sm:text-3xl font-bold text-gray-800">AI-Powered Chatbot for University Information Management</h1>
+        <p class="text-sm sm:text-base text-gray-500 mt-1">University of Engineering & Technology Mardan - Department of Computer Science</p>
+    </header>
+
+    <main class="w-full max-w-2xl mx-auto bg-white rounded-2xl shadow-xl border border-gray-200/80 my-8 flex-grow">
+        <div class="p-4 border-b border-gray-200">
+            <div class="grid grid-cols-2 gap-2 p-1 bg-gray-100 rounded-lg">
+                <button id="student-tab" class="tab-active py-2 px-4 rounded-md text-sm font-semibold transition-all duration-300">Student Chatbot</button>
+                <button id="admin-tab" class="tab-inactive py-2 px-4 rounded-md text-sm font-semibold transition-all duration-300">Admin Panel</button>
+            </div>
+        </div>
+
+        <div id="chatbot-view" class="p-4 sm:p-6 h-[60vh] flex flex-col">
+            <div id="chat-messages" class="flex-grow space-y-4 overflow-y-auto pr-2">
+                <!-- Bot's initial message -->
+                <div class="flex items-start gap-3">
+                    <div class="bg-blue-100 text-blue-600 p-2 rounded-full h-10 w-10 flex-shrink-0 flex items-center justify-center">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <div class="chat-bubble-bot p-3 rounded-lg rounded-tl-none max-w-xs sm:max-w-md">
+                        <p class="text-sm">Hello! I'm the UET Mardan AI assistant. How can I help you with your admission questions today?</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-6 flex items-center gap-3 border-t border-gray-200 pt-4">
+                <input type="text" id="user-input" class="flex-grow w-full px-4 py-3 bg-gray-100 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 text-sm" placeholder="Ask about admissions, fees, programs...">
+                <button id="send-button" class="bg-blue-500 text-white rounded-lg p-3 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 transition-all duration-300">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <div id="admin-view" class="p-6 h-[60vh] hidden">
+             <div class="flex flex-col items-center justify-center h-full text-center text-gray-500">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 mb-4 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                </svg>
+                <h2 class="text-xl font-semibold">Admin Panel</h2>
+                <p class="mt-2 text-sm">This area is for administrative purposes. Functionality to be implemented.</p>
+            </div>
+        </div>
+    </main>
+
+    <footer class="text-center w-full max-w-4xl mx-auto">
+        <p class="text-xs text-gray-400">Final Year Project by Essa Raza, Zahid Jan, & Irshad Amin</p>
+        <p class="text-xs text-gray-400 mt-1">University of Engineering & Technology Mardan</p>
+    </footer>
+
+    <script>
+        const studentTab = document.getElementById('student-tab');
+        const adminTab = document.getElementById('admin-tab');
+        const chatbotView = document.getElementById('chatbot-view');
+        const adminView = document.getElementById('admin-view');
+        const chatMessages = document.getElementById('chat-messages');
+        const userInput = document.getElementById('user-input');
+        const sendButton = document.getElementById('send-button');
+
+        function switchTab(activeTab, inactiveTab, activeView, inactiveView) {
+            activeTab.classList.replace('tab-inactive', 'tab-active');
+            inactiveTab.classList.replace('tab-active', 'tab-inactive');
+            activeView.classList.remove('hidden');
+            inactiveView.classList.add('hidden');
+        }
+
+        studentTab.addEventListener('click', () => {
+            switchTab(studentTab, adminTab, chatbotView, adminView);
+        });
+
+        adminTab.addEventListener('click', () => {
+            switchTab(adminTab, studentTab, adminView, chatbotView);
+        });
+
+        function addMessage(message, sender) {
+            const messageWrapper = document.createElement('div');
+            const messageBubble = document.createElement('div');
+            messageBubble.classList.add('p-3', 'rounded-lg', 'max-w-xs', 'sm:max-w-md');
+            messageBubble.innerHTML = <p class="text-sm">${message}</p>;
+
+            if (sender === 'user') {
+                messageWrapper.classList.add('flex', 'justify-end');
+                messageBubble.classList.add('chat-bubble-user', 'rounded-br-none');
+            } else {
+                messageWrapper.classList.add('flex', 'items-start', 'gap-3');
+                const botIcon = document.createElement('div');
+                botIcon.classList.add('bg-blue-100', 'text-blue-600', 'p-2', 'rounded-full', 'h-10', 'w-10', 'flex-shrink-0', 'flex', 'items-center', 'justify-center');
+                botIcon.innerHTML = <i class="fas fa-robot"></i>;
+                messageWrapper.appendChild(botIcon);
+                messageBubble.classList.add('chat-bubble-bot', 'rounded-tl-none');
+            }
+
+            messageWrapper.appendChild(messageBubble);
+            chatMessages.appendChild(messageWrapper);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function handleUserMessage() {
+            const message = userInput.value.trim();
+            if (message) {
+                addMessage(message, 'user');
+                userInput.value = '';
+                // Simulate bot response
+                setTimeout(() => {
+                    addMessage("Thank you for your question. I am processing your request...", 'bot');
+                }, 1000);
+            }
+        }
+
+        sendButton.addEventListener('click', handleUserMessage);
+        userInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                handleUserMessage();
+            }
+        });
+    </script>
+</body>
+</html>
